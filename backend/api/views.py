@@ -7,7 +7,7 @@ from .serializers import (
     BreedSerializer, KittySerializer, KittyListSerializer
 )
 from .filters import KittyFilter
-from cats.models import Kitty, Breed, Rating
+from cats.models import Breed, Kitty, Rating
 
 
 class BreedViewSet(
@@ -25,7 +25,7 @@ class KittyViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = KittyFilter
     permission_classes = [IsOwnerOrReadOnly,]
-    http_method_names = ['get', 'post', 'patch']
+    http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_serializer_class(self):
         if self.action in ['list']:
@@ -36,10 +36,15 @@ class KittyViewSet(viewsets.ModelViewSet):
 class KittyRatingView(viewsets.ViewSet):
 
     def create(self, request, kitty_id):
-        data = {'rating': request.data.get('rating')}
+        rating = request.data.get('rating')
+        if rating < 0 or rating > 5:
+            return Response(
+                {'error': 'Rating cannot be higher than 5 or lower than 0!'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         Rating.objects.update_or_create(
             user=request.user,
-            kitty_id=kitty_id, defaults={'rating': data['rating']}
+            kitty_id=kitty_id, defaults={'rating': rating}
         )
         return Response(
             {'message': 'Rating created or updated successfully'},

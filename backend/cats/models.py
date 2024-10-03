@@ -28,7 +28,7 @@ class Kitty(models.Model):
     )
     color = models.CharField('Возраст', max_length=16)
     age = models.PositiveSmallIntegerField(
-        'Возраст', validators=[MinValueValidator(0)]
+        'Возраст', validators=[MinValueValidator(1), MaxValueValidator(300)]
     )
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
     description = models.TextField('Описание', max_length=500)

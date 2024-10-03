@@ -5,6 +5,7 @@ from cats.models import Breed, Kitty, Rating
 
 
 class Hex2NameColor(serializers.Field):
+
     def to_representation(self, value):
         return value
 

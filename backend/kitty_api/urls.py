@@ -8,7 +8,11 @@ from .yasg import urlpatterns as doc_url
 
 router = routers.DefaultRouter()
 router.register(r'kitties', views.KittyViewSet)
-router.register(r'kitties/(?P<kitty_id>\d+)/rating', views.KittyRatingView, basename='rating')
+router.register(
+    r'kitties/(?P<kitty_id>\d+)/rating',
+    views.KittyRatingView,
+    basename='rating'
+)
 router.register(r'breeds', views.BreedViewSet)
 
 urlpatterns = [
