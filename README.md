@@ -19,23 +19,23 @@ python -m venv venv
 source venv/bin/activate #(для Linux/Mac)
 ```
 ```bash
-source venv\Scripts\activate #(для Windows).
+source venv\Scripts\activate #(для Windows)
 ```
 
 #### 4 Установить зависимости:
 Установить зависимости проекта с помощью команды
 ```bash
-pip install -r requirements.txt.
+pip install -r requirements.txt
 ```
 #### 5 Создать базу данных:
 Создать базу данных проекта с помощью команды
 ```bash
-python manage.py migrate.
+python manage.py migrate
 ```
 #### 6 Запустить сервер:
 Запустить сервер проекта с помощью команды
 ```bash
-python manage.py runserver.
+python manage.py runserver
 ```
 ***Примечание: Перед запуском сервера убедитесь, что у вас установлены все необходимые зависимости и база данных создана.***
 
@@ -60,14 +60,53 @@ docker-compose up.
 #### 4 Открыть браузер:
 Открыть браузер и перейти по адресу http://localhost:8000.
 
+## Документация API
+***Вы можете найти полную документацию API по ссылке на Swagger: [*тык](http://localhost:8000/swagger/).***
+
 ## Примеры запросов:
+
+***POST /auth/user/***
+```
+Request
+
+Body:
+{
+  "username": "username",
+  "email": "user@example.com",
+  "password": "password"
+}
+
+Response
+
+json
+{
+  "id": 1,
+  "username": "username",
+  "email": "user@example.com"
+}
+```
+***POST /auth/jwt/create/***
+```
+Request
+
+Body:
+{
+  "username": "username",
+  "password": "password"
+}
+Response
+
+json
+{
+  "refresh": "refresh_token",
+  "access": "access_token"
+}
+```
 
 ***GET /api/breeds/***
 ```
 Response
-Content-Type: application/json
-HTTP Status Code: 200
-Example Value:
+
 json
 [
   {
@@ -85,9 +124,7 @@ json
 ***GET /api/kitties/***
 ```
 Response
-Content-Type: application/json
-HTTP Status Code: 200
-Example Value:
+
 json
 [
   {
@@ -105,7 +142,7 @@ json
 ***POST /api/kitties/***
 ```
 Request
-Content-Type: application/json
+
 Body:
 {
   "name": "Kitty Name",
@@ -115,11 +152,10 @@ Body:
   "description": "Description"
 }
 ```
+
 ```
 Response
-Content-Type: application/json
-HTTP Status Code: 201
-Example Value:
+
 json
 {
   "id": 1,
@@ -142,9 +178,6 @@ Request
 ```
 ```
 Response
-Content-Type: application/json
-HTTP Status Code: 201
-Example Value:
 json
 {
   // No response body
